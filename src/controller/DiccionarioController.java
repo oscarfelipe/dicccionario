@@ -54,13 +54,13 @@ public class DiccionarioController implements Initializable {
     static Task copyWorker;
     
     
-    private final ObservableList<Palabra2> palabras;
+    private final ObservableList<Palabra> palabras;
 
     public DiccionarioController() {
-        this.palabras = FXCollections.<Palabra2>observableArrayList(
-            new Palabra2("heldigvis", "afortunadamente", 10L, 1L, " =)"),
-            new Palabra2("allerede", "ya", 10L, 1L, " vi er allerede her"),
-            new Palabra2("stadigvæk", "constantemente, sin cesar, siempre, seguir", 10L, 1L, " =)")
+        this.palabras = FXCollections.<Palabra>observableArrayList(
+            new Palabra("heldigvis","jheldivis", "afortunadamente", "CBSI 2 modul",10, 1, " =)",1),
+            new Palabra("allerede", "elerred","ya","CBSI 2 modul", 10, 1, " vi er allerede her",1),
+            new Palabra("stadigvæk","stedivek", "constantemente, sin cesar, siempre, seguir","CBSI 2 modul", 10, 1, " =)",1)
             );
     }
     
@@ -100,7 +100,6 @@ public class DiccionarioController implements Initializable {
         } catch (SqlJetException ex) {
             Logger.getLogger(DiccionarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         
         
         //columns binding

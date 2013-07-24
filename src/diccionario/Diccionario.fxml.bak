@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.DiccionarioController">
   <children>
-    <TabPane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <tabs>
         <Tab text="add word">
           <content>
@@ -89,13 +89,13 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="table" layoutX="0.0" layoutY="48.0" prefHeight="316.0" prefWidth="600.0" tableMenuButtonVisible="true">
+                <TableView fx:id="table" prefHeight="316.0" prefWidth="600.0" tableMenuButtonVisible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                   <columns>
                     <TableColumn prefWidth="105.0" text="Word" fx:id="word_column" />
                     <TableColumn prefWidth="175.0" text="Definition" fx:id="definition_column" />
                     <TableColumn prefWidth="95.0" text="Knowledge" fx:id="knowledge_column" />
                     <TableColumn prefWidth="75.0" text="Priority" fx:id="priority_column" />
-                    <TableColumn prefWidth="135.0" text="Examples" fx:id="example_column" />
+                    <TableColumn prefWidth="150.0" text="Examples" fx:id="example_column" />
                   </columns>
                 </TableView>
                 <Pane layoutX="0.0" layoutY="0.0" prefHeight="48.0" prefWidth="600.0">
