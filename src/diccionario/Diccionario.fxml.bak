@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.DiccionarioController">
+  <children>
+    <TabPane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab text="add word">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="28.0" spacing="10.0">
+                  <children>
+                    <Label text="Word/Phrase:" />
+                    <TextField id="title" fx:id="title_txt_field" prefWidth="304.0" />
+                  </children>
+                </HBox>
+                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="98.0" spacing="30.0">
+                  <children>
+                    <Label text="Definition:" />
+                    <TextArea fx:id="definition_txt_area" prefHeight="49.0" prefWidth="304.0" wrapText="true" />
+                  </children>
+                </HBox>
+                <HBox id="HBox" alignment="CENTER" layoutX="21.0" layoutY="163.0" spacing="50.0">
+                  <children>
+                    <Label text="Source:" />
+                    <TextField fx:id="source_txt_field" prefWidth="301.0" />
+                  </children>
+                </HBox>
+                <HBox id="HBox" alignment="CENTER" layoutX="24.0" layoutY="252.0" spacing="30.0">
+                  <children>
+                    <Label text="Examples:" />
+                    <TextArea fx:id="example_txt_area" prefHeight="67.0" prefWidth="304.0" wrapText="true" />
+                  </children>
+                </HBox>
+                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="204.0" spacing="26.0">
+                  <children>
+                    <HBox id="HBox" alignment="CENTER" spacing="5.0">
+                      <children>
+                        <Label text="Grade of Knowledge:" />
+                        <ChoiceBox fx:id="grade_of_knowledge_chbox">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ChoiceBox>
+                      </children>
+                    </HBox>
+                    <HBox id="HBox" alignment="CENTER" spacing="5.0">
+                      <children>
+                        <Label text="Priority:" />
+                        <ChoiceBox fx:id="priority_chbox">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ChoiceBox>
+                      </children>
+                    </HBox>
+                  </children>
+                </HBox>
+                <Rectangle arcHeight="34.0" arcWidth="47.0" fill="DODGERBLUE" height="114.0" layoutX="443.0" layoutY="16.0" stroke="BLACK" strokeType="INSIDE" width="143.0" />
+                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="62.0" spacing="5.0">
+                  <children>
+                    <Label text="Pronunciation:" />
+                    <TextField fx:id="pronunciation_txt_field" prefWidth="304.0" />
+                  </children>
+                </HBox>
+                <Button fx:id="save_button" layoutX="532.0" layoutY="319.0" mnemonicParsing="false" onAction="#handleSaveButtonAction" text="Save" />
+                <Label fx:id="message_lbl" layoutX="22.0" layoutY="332.0" opacity="1.0" text="Hola hola" />
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="diccionary">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="table" layoutX="0.0" layoutY="48.0" prefHeight="316.0" prefWidth="600.0" tableMenuButtonVisible="true">
+                  <columns>
+                    <TableColumn prefWidth="105.0" text="Word" fx:id="word_column" />
+                    <TableColumn prefWidth="175.0" text="Definition" fx:id="definition_column" />
+                    <TableColumn prefWidth="95.0" text="Knowledge" fx:id="knowledge_column" />
+                    <TableColumn prefWidth="75.0" text="Priority" fx:id="priority_column" />
+                    <TableColumn prefWidth="135.0" text="Examples" fx:id="example_column" />
+                  </columns>
+                </TableView>
+                <Pane layoutX="0.0" layoutY="0.0" prefHeight="48.0" prefWidth="600.0">
+                  <children>
+                    <TextField layoutX="14.0" layoutY="14.0" prefWidth="360.0" />
+                  </children>
+                </Pane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="search">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
+</AnchorPane>
