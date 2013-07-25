@@ -1,11 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import java.io.File;
+import javafx.concurrent.Task;
 import model.Palabra;
+import model.Palabra3;
 import org.tmatesoft.sqljet.core.SqlJetException;
 import org.tmatesoft.sqljet.core.table.ISqlJetTransaction;
 import org.tmatesoft.sqljet.core.table.SqlJetDb;
@@ -16,7 +15,7 @@ import org.tmatesoft.sqljet.core.SqlJetTransactionMode;
  * @author oscar
  * A class to manage the Data Base
  */
-public class DB {
+public class DBController {
     private static final String FILE_NAME = "test.db";
     
     private static SqlJetDb db;
@@ -75,16 +74,31 @@ public class DB {
             db.commit();
     }	
     
-    public static long addPalabra(final Palabra palabra) throws SqlJetException{
+    public static long addPalabra(final Palabra3 palabra) throws SqlJetException{
+        open();
         return (Long) db.runWriteTransaction(new ISqlJetTransaction() {
 
             @Override
             public Object run(SqlJetDb db) throws SqlJetException {
                 return db.getTable("palabra").insert(palabra.title,palabra.pronunciation,
                         palabra.definition,palabra.source,palabra.grade_of_knowledge,
-                        palabra.priority,palabra.example,palabra.language);
+                        palabra.priority,palabra.example, palabra.language);
             }
         });
+    }
+    
+    //Tasks related with the GUI NOT USED YET
+    
+    public Task createWorkerToSave(final Palabra3 palabra) throws SqlJetException{
+        return new Task(){
+            @Override
+            protected Object call() throws Exception {
+                DBController.addPalabra(palabra);
+                updateMessage("Word Saved");
+                DBController.close();
+                return true;
+            }        
+        };
     }
     
 }

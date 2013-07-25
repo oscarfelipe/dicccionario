@@ -22,6 +22,12 @@
                     <TextField id="title" fx:id="title_txt_field" prefWidth="304.0" />
                   </children>
                 </HBox>
+                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="62.0" spacing="5.0">
+                  <children>
+                    <Label text="Pronunciation:" />
+                    <TextField fx:id="pronunciation_txt_field" prefWidth="304.0" />
+                  </children>
+                </HBox>
                 <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="98.0" spacing="30.0">
                   <children>
                     <Label text="Definition:" />
@@ -31,31 +37,21 @@
                 <HBox id="HBox" alignment="CENTER" layoutX="21.0" layoutY="163.0" spacing="50.0">
                   <children>
                     <Label text="Source:" />
-                    <TextField fx:id="source_txt_field" prefWidth="301.0" />
+                    <TextField fx:id="source_txt_field" prefWidth="304.0000999999975" />
                   </children>
                 </HBox>
-                <HBox id="HBox" alignment="CENTER" layoutX="24.0" layoutY="252.0" spacing="30.0">
+                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="210.0" spacing="16.0">
                   <children>
-                    <Label text="Examples:" />
-                    <TextArea fx:id="example_txt_area" prefHeight="67.0" prefWidth="304.0" wrapText="true" />
-                  </children>
-                </HBox>
-                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="204.0" spacing="26.0">
-                  <children>
-                    <HBox id="HBox" alignment="CENTER" spacing="5.0">
-                      <children>
-                        <Label text="Grade of Knowledge:" />
-                        <ChoiceBox fx:id="grade_of_knowledge_chbox">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ChoiceBox>
-                      </children>
-                    </HBox>
+                    <Label text="Grade of Knowledge:" />
+                    <ChoiceBox fx:id="grade_of_knowledge_chbox">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ChoiceBox>
                     <HBox id="HBox" alignment="CENTER" spacing="5.0">
                       <children>
                         <Label text="Priority:" />
@@ -72,13 +68,14 @@
                     </HBox>
                   </children>
                 </HBox>
-                <Rectangle arcHeight="34.0" arcWidth="47.0" fill="DODGERBLUE" height="114.0" layoutX="443.0" layoutY="16.0" stroke="BLACK" strokeType="INSIDE" width="143.0" />
-                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="62.0" spacing="5.0">
+                <HBox id="HBox" alignment="CENTER" layoutX="24.0" layoutY="252.0" spacing="30.0">
                   <children>
-                    <Label text="Pronunciation:" />
-                    <TextField fx:id="pronunciation_txt_field" prefWidth="304.0" />
+                    <Label text="Examples:" />
+                    <TextArea fx:id="example_txt_area" prefHeight="67.0" prefWidth="304.0" wrapText="true" />
                   </children>
                 </HBox>
+                <HBox id="HBox" alignment="CENTER" layoutX="22.0" layoutY="204.0" spacing="26.0" />
+                <Rectangle arcHeight="34.0" arcWidth="47.0" fill="DODGERBLUE" height="114.0" layoutX="443.0" layoutY="16.0" stroke="BLACK" strokeType="INSIDE" width="143.0" />
                 <Button fx:id="save_button" layoutX="532.0" layoutY="319.0" mnemonicParsing="false" onAction="#handleSaveButtonAction" text="Save" />
                 <Label fx:id="message_lbl" layoutX="22.0" layoutY="332.0" opacity="1.0" text="Hola hola" />
               </children>

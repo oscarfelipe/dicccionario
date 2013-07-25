@@ -32,30 +32,30 @@ public class Palabra {
     }
     
     public static Palabra read(ISqlJetCursor cursor) throws SqlJetException{
-        
+        //CHECK THAT THE INT CAST IS NOT MAKING TROUBLES WITH THE DATABASE...
         return new Palabra(cursor.getString("title"), cursor.getString("pronunciation"),cursor.getString("definition"),
                 cursor.getString("source"),(int)cursor.getInteger("grade_of_knowledge"), (int)cursor.getInteger("priority"),
                 cursor.getString("example"),(int)cursor.getInteger("language"));
     }
 
     public String getTitle() {
-        return title.getValueSafe();
+        return title.get();
     }
 
     public String getPronunciation() {
-        return pronunciation.getValueSafe();
+        return pronunciation.get();
     }
 
     public String getDefinition() {
-        return definition.getValueSafe();
+        return definition.get();
     }
 
     public String getSource() {
-        return source.getValueSafe();
+        return source.get();
     }
 
     public String getExample() {
-        return example.getValueSafe();
+        return example.get();
     }
 
     public Integer getLanguage() {
