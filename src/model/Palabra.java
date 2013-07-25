@@ -4,7 +4,7 @@
  */
 package model;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import org.tmatesoft.sqljet.core.SqlJetException;
 import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
@@ -14,59 +14,59 @@ import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
  * @author oscar
  */
 public class Palabra {
-    //Palabra represents a word or phrase in the dictionary
     
-    public final SimpleStringProperty title, pronunciation, definition,source,example;
-    public final SimpleIntegerProperty language, grade_of_knowledge, priority;
+    
+    private SimpleStringProperty title, pronunciation, definition, source, example;
+    private SimpleLongProperty language, grade_of_knowledge, priority;
 
-    public Palabra(String title, String pronunciation, String definition, String source, int grade_of_knowledge, int priority, String example, int language) {
-        
+    public Palabra(String title, String pronunciation, String definition, String source, long grade_of_knowledge, long priority, String example, long language) {
+
         this.title = new SimpleStringProperty(title);
         this.pronunciation = new SimpleStringProperty(pronunciation);
         this.definition = new SimpleStringProperty(definition);
         this.source = new SimpleStringProperty(source);
-        this.grade_of_knowledge = new SimpleIntegerProperty(grade_of_knowledge);
-        this.priority = new SimpleIntegerProperty(priority);
+        this.grade_of_knowledge = new SimpleLongProperty(grade_of_knowledge);
+        this.priority = new SimpleLongProperty(priority);
         this.example = new SimpleStringProperty(example);
-        this.language = new SimpleIntegerProperty(language);
+        this.language = new SimpleLongProperty(language);
     }
-    
-    public static Palabra read(ISqlJetCursor cursor) throws SqlJetException{
-        //CHECK THAT THE INT CAST IS NOT MAKING TROUBLES WITH THE DATABASE...
-        return new Palabra(cursor.getString("title"), cursor.getString("pronunciation"),cursor.getString("definition"),
-                cursor.getString("source"),(int)cursor.getInteger("grade_of_knowledge"), (int)cursor.getInteger("priority"),
-                cursor.getString("example"),(int)cursor.getInteger("language"));
+
+    public static Palabra read(ISqlJetCursor cursor) throws SqlJetException {
+
+        return new Palabra(cursor.getString("title"), cursor.getString("pronunciation"), cursor.getString("definition"),
+                cursor.getString("source"), (int) cursor.getInteger("grade_of_knowledge"), (int) cursor.getInteger("priority"),
+                cursor.getString("example"), (int) cursor.getInteger("language"));
     }
 
     public String getTitle() {
-        return title.get();
+        return title.getValueSafe();
     }
 
     public String getPronunciation() {
-        return pronunciation.get();
+        return pronunciation.getValueSafe();
     }
 
     public String getDefinition() {
-        return definition.get();
+        return definition.getValueSafe();
     }
 
     public String getSource() {
-        return source.get();
+        return source.getValueSafe();
     }
 
     public String getExample() {
-        return example.get();
+        return example.getValueSafe();
     }
 
-    public Integer getLanguage() {
+    public long getLanguage() {
         return language.get();
     }
 
-    public Integer getGrade_of_knowledge() {
+    public long getGrade_of_knowledge() {
         return grade_of_knowledge.get();
     }
 
-    public Integer getPriority() {
+    public long getPriority() {
         return priority.get();
     }
     

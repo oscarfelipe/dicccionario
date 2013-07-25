@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *  Hola!
  */
 package controller;
 
@@ -23,9 +22,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Palabra;
-import model.Palabra2;
-import model.Palabra3;
-import model.Palabras;
 import org.tmatesoft.sqljet.core.SqlJetException;
 
 
@@ -67,15 +63,16 @@ public class DiccionarioController implements Initializable {
     
     @FXML
     private void handleSaveButtonAction(ActionEvent event) {
-//       Palabra3 palabra = new Palabra3(title_txt_field.getText(),pronunciation_txt_field.getText(), 
-//               definition_txt_area.getText(), source_txt_field.getText(), 
-//               10, 10, example_txt_area.getText(), 1);
+       //Create a word
+       Palabra palabra = new Palabra(title_txt_field.getText(),pronunciation_txt_field.getText(), 
+               definition_txt_area.getText(), source_txt_field.getText(), 
+               10, 10, example_txt_area.getText(), 1);
         //Test to save word...
-        Palabra3 palabra = new Palabra3("heldigvis", "jheldivis", "afortunadamente", "CBSI 2 modul", 10, 1, " =)", 1);
+    
         
-        System.out.println("Button Pressed "+ "Title :"+  palabra.title);
+        System.out.println("Button Pressed "+ "Title :"+  palabra.getTitle());
         try {         
-           copyWorker = createWorkerToSave(palabra);
+           copyWorker = DBController.createWorkerToSave(palabra);
            message_lbl.textProperty().bind(copyWorker.messageProperty());
            
            new Thread(copyWorker).start();
@@ -90,32 +87,19 @@ public class DiccionarioController implements Initializable {
         
         
     }
-    public Task createWorkerToSave(final Palabra3 palabra) throws SqlJetException{
-        return new Task(){
-            @Override
-            protected Object call() throws Exception {
-                //DBController.open(); //if its already open doesn't throws an error
-                DBController.addPalabra(palabra);
- 
-                updateMessage("Word Saved");
-                DBController.close();
-                return true;
-            }        
-        };
-    }
     
     private void bindColumns() {
         //columns binding
         word_column.setCellValueFactory(
-                new PropertyValueFactory<Palabra2,String>("title"));
+                new PropertyValueFactory<Palabra,String>("title"));
         definition_column.setCellValueFactory(
-                new PropertyValueFactory<Palabra2,String>("definition"));
+                new PropertyValueFactory<Palabra,String>("definition"));
         knowledge_column.setCellValueFactory(
-                new PropertyValueFactory<Palabra2,Long>("grade_of_knowledge"));
+                new PropertyValueFactory<Palabra,Long>("grade_of_knowledge"));
         priority_column.setCellValueFactory(
-                new PropertyValueFactory<Palabra2,Long>("priority"));
+                new PropertyValueFactory<Palabra,Long>("priority"));
         example_column.setCellValueFactory(
-                new PropertyValueFactory<Palabra2,String>("example"));
+                new PropertyValueFactory<Palabra,String>("example"));
         table.setItems(palabras);
     }    
     
@@ -123,7 +107,8 @@ public class DiccionarioController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         try {
-            DBController.open();
+            
+            DBController.open();//create or open the data base
            // DBController.close();
         } catch (SqlJetException ex) {
             Logger.getLogger(DiccionarioController.class.getName()).log(Level.SEVERE, null, ex);

@@ -4,11 +4,11 @@ package controller;
 import java.io.File;
 import javafx.concurrent.Task;
 import model.Palabra;
-import model.Palabra3;
 import org.tmatesoft.sqljet.core.SqlJetException;
 import org.tmatesoft.sqljet.core.table.ISqlJetTransaction;
 import org.tmatesoft.sqljet.core.table.SqlJetDb;
 import org.tmatesoft.sqljet.core.SqlJetTransactionMode;
+import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
 
 /**
  *
@@ -16,7 +16,7 @@ import org.tmatesoft.sqljet.core.SqlJetTransactionMode;
  * A class to manage the Data Base
  */
 public class DBController {
-    private static final String FILE_NAME = "test.db";
+    private static final String FILE_NAME = "test2.db";
     
     private static SqlJetDb db;
     
@@ -69,36 +69,50 @@ public class DBController {
     public static void beginReadTransaction() throws SqlJetException {
 		db.beginTransaction(SqlJetTransactionMode.READ_ONLY);		
     }
+    
+    public static void startWriteTransaction() throws SqlJetException {
+            db.beginTransaction(SqlJetTransactionMode.WRITE); 
+    }
 	
     public static void commitTransaction() throws SqlJetException {
             db.commit();
     }	
-    
-    public static long addPalabra(final Palabra3 palabra) throws SqlJetException{
-        open();
+    //add a word and return the index of the item sucessfully added.
+    public static long addPalabra(final Palabra palabra) throws SqlJetException{
+        
         return (Long) db.runWriteTransaction(new ISqlJetTransaction() {
 
             @Override
             public Object run(SqlJetDb db) throws SqlJetException {
-                return db.getTable("palabra").insert(palabra.title,palabra.pronunciation,
-                        palabra.definition,palabra.source,palabra.grade_of_knowledge,
-                        palabra.priority,palabra.example, palabra.language);
+                return db.getTable("palabra").insert(palabra.getTitle(),palabra.getPronunciation(),
+                        palabra.getDefinition(),palabra.getSource(),palabra.getGrade_of_knowledge(),
+                        palabra.getPriority(),palabra.getExample(), palabra.getLanguage());
             }
         });
     }
-    
-    //Tasks related with the GUI NOT USED YET
-    
-    public Task createWorkerToSave(final Palabra3 palabra) throws SqlJetException{
-        return new Task(){
+   public static ISqlJetCursor getAllWords() throws SqlJetException {
+       return db.getTable("payments").order("palabra_id");
+   } 
+    //Tasks related with the GUI 
+    /*Create a task for a thread running in the background.
+     *This task add a new word on the database
+     */
+    public static Task createWorkerToSave(final Palabra palabra) throws SqlJetException {
+        return new Task() {
             @Override
             protected Object call() throws Exception {
-                DBController.addPalabra(palabra);
+                DBController.open();
+                DBController.startWriteTransaction();
+                try {
+                    DBController.addPalabra(palabra);
+                    
+                } finally {
+                    DBController.commitTransaction();
+                }
                 updateMessage("Word Saved");
-                DBController.close();
                 return true;
-            }        
-        };
+            }
+        }; 
     }
     
 }
