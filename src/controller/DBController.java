@@ -11,7 +11,7 @@ import org.tmatesoft.sqljet.core.SqlJetTransactionMode;
 import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
 
 /**
- *
+ *     
  * @author oscar     
  * A class to manage the Data Base
  */
