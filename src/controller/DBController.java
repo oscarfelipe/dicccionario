@@ -93,7 +93,7 @@ public class DBController {
    public static ISqlJetCursor getAllWords() throws SqlJetException {
        return db.getTable("payments").order("palabra_id");
    } 
-    //Tasks related with the GUI 
+    //Tasks related with GUI 
     /*Create a task for a thread running in the background.
      *This task add a new word on the database
      */
