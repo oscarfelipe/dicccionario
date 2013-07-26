@@ -1,5 +1,0 @@
- -- INSERT INTO language  (language) VALUES ('english');
-
- -- INSERT INTO palabra (title, definition,source,example,fk_language_id) VALUES ( 'kat', 'gato', 'Bethesda', 'din kat spiser hendes hund', 1) ;
- 
- SELECT * FROM palabra;
