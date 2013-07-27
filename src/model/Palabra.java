@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * A Bean representing to representing Words
+ * Palabra in spanish means word in english
  */
 package model;
 
@@ -34,8 +34,8 @@ public class Palabra {
     public static Palabra read(ISqlJetCursor cursor) throws SqlJetException {
 
         return new Palabra(cursor.getString("title"), cursor.getString("pronunciation"), cursor.getString("definition"),
-                cursor.getString("source"), (int) cursor.getInteger("grade_of_knowledge"), (int) cursor.getInteger("priority"),
-                cursor.getString("example"), (int) cursor.getInteger("language"));
+                cursor.getString("source"), cursor.getInteger("grade_of_knowledge"), cursor.getInteger("priority"),
+                cursor.getString("example"), cursor.getInteger("fk_language_id"));
     }
 
     public String getTitle() {

@@ -52,11 +52,12 @@ public class DBController {
                     "fk_language_id INTEGER,\n" +
                     "FOREIGN KEY(fk_language_id)  REFERENCES language (language_id)\n" +
                     ");");
+                    db.createIndex("CREATE INDEX palabra_by_creation ON palabra(palabra_id);");
+                    db.createIndex("CREATE UNIQUE INDEX palabra_by_title ON palabra(title);");
                     return null;
                 }
             });
         }
-    
     return db;
     }
     
@@ -91,7 +92,7 @@ public class DBController {
         });
     }
    public static ISqlJetCursor getAllWords() throws SqlJetException {
-       return db.getTable("payments").order("palabra_id");
+       return db.getTable("palabra").order("palabra_by_creation");
    } 
     //Tasks related with GUI 
     /*Create a task for a thread running in the background.

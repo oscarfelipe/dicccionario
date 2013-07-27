@@ -4,6 +4,8 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Palabra;
 import org.tmatesoft.sqljet.core.SqlJetException;
+import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
 
 
 /**
@@ -50,16 +53,8 @@ public class DiccionarioController implements Initializable {
     @FXML Label message_lbl;
     static Task copyWorker;
     DBController db = new DBController();
-    
-    private final ObservableList<Palabra> palabras;
+    private List<Palabra> palabras ;
 
-    public DiccionarioController() {
-        this.palabras = FXCollections.<Palabra>observableArrayList(
-            new Palabra("heldigvis","jheldivis", "afortunadamente", "CBSI 2 modul",10, 1, " =)",1),
-            new Palabra("allerede", "elerred","ya","CBSI 2 modul", 10, 1, " vi er allerede her",1),
-            new Palabra("stadigvæk","stedivek", "constantemente, sin cesar, siempre, seguir","CBSI 2 modul", 10, 1, " =)",1)
-            );
-    }
     
     @FXML
     private void handleSaveButtonAction(ActionEvent event) {
@@ -87,7 +82,40 @@ public class DiccionarioController implements Initializable {
         
         
     }
-    
+    private void load(){
+
+        palabras = new ArrayList<>();
+        try{
+            DBController.open();
+            DBController.beginReadTransaction();
+            ISqlJetCursor cursor = DBController.getAllWords();
+            while(!cursor.eof()){
+
+                Palabra palabra = Palabra.read(cursor);
+                if(palabra != null){
+                    //her I have to add the words
+                    palabras.add(palabra);
+                    cursor.next();
+                }
+            }
+        }catch (SqlJetException ex){
+            ex.printStackTrace();
+            return;
+        }finally{
+            try{
+                try{
+                    DBController.commitTransaction();
+                }finally{
+                    DBController.close();
+                }
+            }catch (SqlJetException ex){
+                ex.printStackTrace();
+
+            }
+
+        }
+
+    }
     private void bindColumns() {
         //columns binding
         word_column.setCellValueFactory(
@@ -100,12 +128,12 @@ public class DiccionarioController implements Initializable {
                 new PropertyValueFactory<Palabra,Long>("priority"));
         example_column.setCellValueFactory(
                 new PropertyValueFactory<Palabra,String>("example"));
-        table.setItems(palabras);
+
     }    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         try {
             
             DBController.open();//create or open the data base
@@ -113,8 +141,11 @@ public class DiccionarioController implements Initializable {
         } catch (SqlJetException ex) {
             Logger.getLogger(DiccionarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        load(); //load from database
+        ObservableList<Palabra> observablePalabras = FXCollections.observableArrayList(palabras);//wrap the list
         bindColumns();
-        
+        table.setItems(observablePalabras); //put the items on the table
+
         
     }
 
