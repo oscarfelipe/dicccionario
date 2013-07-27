@@ -51,9 +51,10 @@ public class DiccionarioController implements Initializable {
     @FXML TableColumn priority_column;
     @FXML TableColumn example_column;
     @FXML Label message_lbl;
+
     static Task copyWorker;
-    DBController db = new DBController();
-    private List<Palabra> palabras ;
+    private List<Palabra> palabras =  new ArrayList<>();
+    ObservableList<Palabra> observablePalabras = FXCollections.observableArrayList(palabras);//wrap the list
 
     
     @FXML
@@ -69,12 +70,21 @@ public class DiccionarioController implements Initializable {
         try {         
            copyWorker = DBController.createWorkerToSave(palabra);
            message_lbl.textProperty().bind(copyWorker.messageProperty());
-           
+           observablePalabras.add(palabra);//add word to the observable list
            new Thread(copyWorker).start();
         } catch (SqlJetException ex) {
             Logger.getLogger(DiccionarioController.class.getName()).log(Level.SEVERE, null, ex);
             message_lbl.setText("Error when saving word...");
-        }   
+        }
+
+        cleanFields();
+    }
+    private void cleanFields(){
+        title_txt_field.clear();
+        pronunciation_txt_field.clear();
+        definition_txt_area.clear();
+        source_txt_field.clear();
+        example_txt_area.clear();
     }
     
     @FXML
@@ -84,7 +94,7 @@ public class DiccionarioController implements Initializable {
     }
     private void load(){
 
-        palabras = new ArrayList<>();
+
         try{
             DBController.open();
             DBController.beginReadTransaction();
@@ -94,7 +104,7 @@ public class DiccionarioController implements Initializable {
                 Palabra palabra = Palabra.read(cursor);
                 if(palabra != null){
                     //her I have to add the words
-                    palabras.add(palabra);
+                    observablePalabras.add(palabra);
                     cursor.next();
                 }
             }
@@ -142,9 +152,9 @@ public class DiccionarioController implements Initializable {
             Logger.getLogger(DiccionarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
         load(); //load from database
-        ObservableList<Palabra> observablePalabras = FXCollections.observableArrayList(palabras);//wrap the list
-        bindColumns();
-        table.setItems(observablePalabras); //put the items on the table
+
+        bindColumns(); //connect columns on TableView with word values
+        table.setItems(observablePalabras); // put the items on the table
 
         
     }
